@@ -6,73 +6,24 @@
     <title>ARC-AGI Solver | Inference GIF Physics</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg-dark: #0f0c29; --bg-mid: #302b63; --bg-light: #24243e; --accent: #00ff88; --accent-blue: #00d4ff; --text: #fff; --text-dim: #888; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, var(--bg-dark), var(--bg-mid), var(--bg-light)); min-height: 100vh; color: var(--text); }
-        .header { background: rgba(0,0,0,0.4); padding: 25px 40px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .logo { display: flex; align-items: center; gap: 15px; }
-        .logo-icon { font-size: 40px; }
-        .logo h1 { font-size: 28px; background: linear-gradient(90deg, var(--accent), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .logo p { color: var(--text-dim); font-size: 14px; }
-        .header-links { display: flex; gap: 15px; }
-        .header-links a { color: var(--text-dim); text-decoration: none; padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
-        .header-links a:hover { color: var(--accent); border-color: var(--accent); }
-        .stats-bar { display: flex; gap: 40px; padding: 25px 40px; background: rgba(0,255,136,0.03); border-bottom: 1px solid rgba(0,255,136,0.15); align-items: center; flex-wrap: wrap; }
-        .stat { text-align: center; min-width: 80px; }
-        .stat-value { font-size: 42px; font-weight: 700; color: var(--accent); line-height: 1; }
-        .stat-value.blue { color: var(--accent-blue); }
-        .stat-value.orange { color: #ff8800; }
-        .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
-        .progress-container { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 20px; }
-        .progress-track { flex: 1; height: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-blue)); border-radius: 12px; position: relative; }
-        .progress-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite; }
-        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-        .progress-text { font-size: 18px; font-weight: bold; color: var(--accent); }
-        .main { padding: 40px; max-width: 1600px; margin: 0 auto; }
-        .section { margin-bottom: 50px; }
-        .section-title { font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
-        .section-title::before { content: ''; width: 4px; height: 28px; background: linear-gradient(180deg, var(--accent), var(--accent-blue)); border-radius: 2px; }
-        .categories { display: flex; gap: 12px; flex-wrap: wrap; }
-        .category-badge { padding: 10px 20px; background: rgba(255,255,255,0.05); border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s; }
-        .category-badge:hover, .category-badge.active { background: rgba(0,255,136,0.1); border-color: var(--accent); }
-        .category-count { background: var(--accent); color: #000; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
-        .puzzle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
-        .puzzle-card { background: rgba(255,255,255,0.03); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; }
-        .puzzle-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,255,136,0.15); }
-        .puzzle-header { padding: 15px 20px; background: rgba(0,255,136,0.08); display: flex; justify-content: space-between; align-items: center; }
-        .puzzle-id { font-family: monospace; font-size: 14px; color: var(--accent); font-weight: 600; }
-        .puzzle-rule { font-size: 11px; padding: 4px 12px; background: rgba(0,212,255,0.15); border-radius: 12px; color: var(--accent-blue); }
-        .puzzle-body { padding: 20px; }
-        .example-row { display: flex; gap: 20px; align-items: center; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
-        .grid-label { font-size: 9px; color: var(--text-dim); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        .pixel-grid { display: inline-grid; gap: 1px; background: #1a1a2e; padding: 2px; border-radius: 4px; }
-        .pixel { border-radius: 1px; }
-        .arrow { font-size: 24px; color: var(--accent); }
-        .rule-description { padding: 12px 15px; background: rgba(0,0,0,0.3); border-radius: 8px; font-family: monospace; font-size: 11px; color: #999; }
-        .c0 { background: #000; } .c1 { background: #0074D9; } .c2 { background: #FF4136; } .c3 { background: #2ECC40; } .c4 { background: #FFDC00; }
-        .c5 { background: #AAA; } .c6 { background: #F012BE; } .c7 { background: #FF851B; } .c8 { background: #7FDBFF; } .c9 { background: #870C25; }
-        footer { text-align: center; padding: 30px; color: #444; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
-        footer a { color: var(--accent); text-decoration: none; }
-        @media (max-width: 768px) { .header { flex-direction: column; text-align: center; } .puzzle-grid { grid-template-columns: 1fr; } .main { padding: 20px; } }
+        *{margin:0;padding:0;box-sizing:border-box}:root{--bg:#0f0c29;--accent:#00ff88;--blue:#00d4ff;--dim:#888}body{font-family:system-ui;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:#fff}.header{background:rgba(0,0,0,.4);padding:20px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;border-bottom:1px solid rgba(255,255,255,.1)}.logo{display:flex;align-items:center;gap:12px}.logo-icon{font-size:36px}.logo h1{font-size:24px;background:linear-gradient(90deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.logo p{color:var(--dim);font-size:13px}.header a{color:var(--dim);text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,.1);border-radius:15px;font-size:13px}.header a:hover{border-color:var(--accent);color:var(--accent)}.stats{display:flex;gap:30px;padding:20px 30px;background:rgba(0,255,136,.03);border-bottom:1px solid rgba(0,255,136,.15);align-items:center;flex-wrap:wrap}.stat{text-align:center}.stat-val{font-size:36px;font-weight:700;color:var(--accent)}.stat-val.orange{color:#f80}.stat-lbl{font-size:10px;color:var(--dim);text-transform:uppercase}.prog{flex:1;display:flex;align-items:center;gap:15px}.prog-track{flex:1;height:20px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden}.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:10px}.prog-txt{font-weight:bold;color:var(--accent)}main{padding:30px;max-width:1600px;margin:0 auto}.section{margin-bottom:40px}.section h2{font-size:20px;margin-bottom:20px;display:flex;align-items:center;gap:10px}.section h2::before{content:'';width:4px;height:24px;background:var(--accent);border-radius:2px}.cats{display:flex;gap:10px;flex-wrap:wrap}.cat{padding:8px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px}.cat:hover,.cat.active{background:rgba(0,255,136,.1);border-color:var(--accent)}.cat-n{background:var(--accent);color:#000;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:bold}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:15px}.card{background:rgba(255,255,255,.03);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,136,.12)}.card-hdr{padding:12px 16px;background:rgba(0,255,136,.08);display:flex;justify-content:space-between;align-items:center}.card-id{font-family:monospace;font-size:13px;color:var(--accent)}.card-rule{font-size:11px;padding:3px 10px;background:rgba(0,212,255,.15);border-radius:10px;color:var(--blue)}.card-body{padding:16px}.ex-row{display:flex;gap:15px;align-items:center;justify-content:center;margin-bottom:12px;flex-wrap:wrap}.g-lbl{font-size:9px;color:var(--dim);margin-bottom:4px;text-transform:uppercase;text-align:center}.px-grid{display:inline-grid;gap:1px;background:#1a1a2e;padding:2px;border-radius:3px}.px{border-radius:1px}.arrow{font-size:20px;color:var(--accent)}.desc{padding:10px 12px;background:rgba(0,0,0,.3);border-radius:6px;font-family:monospace;font-size:11px;color:#999}.c0{background:#000}.c1{background:#0074D9}.c2{background:#FF4136}.c3{background:#2ECC40}.c4{background:#FFDC00}.c5{background:#AAA}.c6{background:#F012BE}.c7{background:#FF851B}.c8{background:#7FDBFF}.c9{background:#870C25}footer{text-align:center;padding:25px;color:#444;font-size:12px}footer a{color:var(--accent);text-decoration:none}@media(max-width:768px){.header{flex-direction:column;text-align:center}.grid{grid-template-columns:1fr}main{padding:15px}}
     </style>
 </head>
 <body>
     <header class="header">
         <div class="logo"><span class="logo-icon">🧠</span><div><h1>ARC-AGI Solver</h1><p>Inference GIF Physics | FunnelFunction LLC</p></div></div>
-        <div class="header-links"><a href="https://github.com/FunnelFunction/0.0_Inference_GIF_Physics" target="_blank">📂 GitHub</a><a href="https://funnelfunction.com" target="_blank">🌐 Website</a></div>
+        <div><a href="https://github.com/FunnelFunction/0.0_Inference_GIF_Physics">📂 GitHub</a></div>
     </header>
-    <div class="stats-bar">
-        <div class="stat"><div class="stat-value">19</div><div class="stat-label">Solved</div></div>
-        <div class="stat"><div class="stat-value orange">381</div><div class="stat-label">Remaining</div></div>
-        <div class="progress-container"><div class="progress-track"><div class="progress-fill" style="width: 4.75%"></div></div><span class="progress-text">4.75%</span></div>
-        <div class="stat"><div class="stat-value blue">3rd</div><div class="stat-label">Pass</div></div>
+    <div class="stats">
+        <div class="stat"><div class="stat-val">20</div><div class="stat-lbl">Solved</div></div>
+        <div class="stat"><div class="stat-val orange">380</div><div class="stat-lbl">Remaining</div></div>
+        <div class="prog"><div class="prog-track"><div class="prog-fill" style="width:5%"></div></div><span class="prog-txt">5%</span></div>
     </div>
-    <main class="main">
-        <section class="section"><h2 class="section-title">Solved by Category</h2><div class="categories" id="categories"></div></section>
-        <section class="section"><h2 class="section-title">✅ Solved Puzzles (19)</h2><div class="puzzle-grid" id="puzzle-grid"></div></section>
+    <main>
+        <section class="section"><h2>Categories</h2><div class="cats" id="cats"></div></section>
+        <section class="section"><h2>✅ Solved (20)</h2><div class="grid" id="grid"></div></section>
     </main>
-    <footer><p>Built with <strong>Inference GIF Physics</strong> | <a href="https://funnelfunction.com">FunnelFunction.com</a> · Armstrong Knight & Abdullah Khan</p></footer>
+    <footer><a href="https://funnelfunction.com">FunnelFunction.com</a> · Armstrong Knight & Abdullah Khan</footer>
     <script>
 const PUZZLES = [
   { id: '67a3c6ac', rule: 'flip_h', category: 'geometric', description: 'Horizontal Flip', input: [[6, 6, 6, 2], [6, 1, 6, 2], [7, 2, 7, 2], [1, 7, 2, 2]], output: [[2, 6, 6, 6], [2, 6, 1, 6], [2, 7, 2, 7], [2, 2, 7, 1]] },
@@ -94,33 +45,15 @@ const PUZZLES = [
   { id: '1e0a9b12', rule: 'gravity_down', category: 'gravity', description: 'Pixels fall down', input: [[0, 4, 0, 9], [0, 0, 0, 0], [0, 4, 6, 0], [1, 0, 0, 0]], output: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 4, 0, 0], [1, 4, 6, 9]] },
   { id: 'dc433765', rule: 'sort_rows', category: 'sort', description: 'Sort rows ascending', input: [[3, 0, 0], [0, 0, 0], [0, 0, 4]], output: [[0, 0, 0], [0, 3, 0], [0, 0, 4]] },
   { id: '25ff71a9', rule: 'sort_cols', category: 'sort', description: 'Sort columns ascending', input: [[1, 1, 1], [0, 0, 0], [0, 0, 0]], output: [[0, 0, 0], [1, 1, 1], [0, 0, 0]] },
+  { id: '1cf80156', rule: 'crop_bbox', category: 'crop', description: 'Crop to bounding box', input: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], output: [[0, 2, 2, 2], [0, 0, 2, 0], [2, 2, 2, 0], [2, 0, 2, 0]] }
 ];
-        const CATS = {geometric: 7, color_map: 4, tiling: 2, scale: 2, gravity: 2, sort: 2};
-        function createGrid(d) {
-            const r = d.length, c = d[0].length, s = Math.min(11, Math.floor(100 / Math.max(r, c)));
-            let h = `<div class="pixel-grid" style="grid-template-columns: repeat(${c}, ${s}px);">`;
-            for (let i = 0; i < r; i++) for (let j = 0; j < c; j++) h += `<div class="pixel c${d[i][j]}" style="width:${s}px;height:${s}px"></div>`;
-            return h + '</div>';
-        }
-        function renderCats() {
-            let h = '<div class="category-badge active" onclick="filter(\'all\')"><span>📋 All</span><span class="category-count">19</span></div>';
-            const icons = {geometric:'🔄',color_map:'🎨',tiling:'🧱',scale:'📐',gravity:'⬇️',sort:'📊'};
-            for (let [k,v] of Object.entries(CATS)) h += `<div class="category-badge" onclick="filter('${k}')"><span>${icons[k]} ${k}</span><span class="category-count">${v}</span></div>`;
-            document.getElementById('categories').innerHTML = h;
-        }
-        function render(ps) {
-            document.getElementById('puzzle-grid').innerHTML = ps.map(p => `
-                <div class="puzzle-card"><div class="puzzle-header"><span class="puzzle-id">${p.id}</span><span class="puzzle-rule">${p.rule}</span></div>
-                <div class="puzzle-body"><div class="example-row"><div><div class="grid-label">Input</div>${createGrid(p.input)}</div>
-                <div class="arrow">→</div><div><div class="grid-label">Output</div>${createGrid(p.output)}</div></div>
-                <div class="rule-description">${p.description}</div></div></div>`).join('');
-        }
-        function filter(c) {
-            document.querySelectorAll('.category-badge').forEach(b => b.classList.remove('active'));
-            event.target.closest('.category-badge').classList.add('active');
-            render(c === 'all' ? PUZZLES : PUZZLES.filter(p => p.category === c));
-        }
-        renderCats(); render(PUZZLES);
+        const CATS={geometric:7,color_map:4,tiling:2,scale:2,gravity:2,sort:2,crop:1};
+        const ICONS={geometric:'🔄',color_map:'🎨',tiling:'🧱',scale:'📐',gravity:'⬇️',sort:'📊',crop:'✂️'};
+        function mkGrid(d){const r=d.length,c=d[0].length,s=Math.min(10,Math.floor(90/Math.max(r,c)));let h='<div class="px-grid" style="grid-template-columns:repeat('+c+','+s+'px)">';for(let i=0;i<r;i++)for(let j=0;j<c;j++)h+='<div class="px c'+d[i][j]+'" style="width:'+s+'px;height:'+s+'px"></div>';return h+'</div>'}
+        function renderCats(){let h='<div class="cat active" onclick="filter(\'all\')">📋 All<span class="cat-n">20</span></div>';for(let[k,v]of Object.entries(CATS))h+='<div class="cat" onclick="filter(\''+k+'\')">'+ICONS[k]+' '+k+'<span class="cat-n">'+v+'</span></div>';document.getElementById('cats').innerHTML=h}
+        function render(ps){document.getElementById('grid').innerHTML=ps.map(p=>'<div class="card"><div class="card-hdr"><span class="card-id">'+p.id+'</span><span class="card-rule">'+p.rule+'</span></div><div class="card-body"><div class="ex-row"><div><div class="g-lbl">In</div>'+mkGrid(p.input)+'</div><div class="arrow">→</div><div><div class="g-lbl">Out</div>'+mkGrid(p.output)+'</div></div><div class="desc">'+p.description+'</div></div></div>').join('')}
+        function filter(c){document.querySelectorAll('.cat').forEach(b=>b.classList.remove('active'));event.target.closest('.cat').classList.add('active');render(c==='all'?PUZZLES:PUZZLES.filter(p=>p.category===c))}
+        renderCats();render(PUZZLES);
     </script>
 </body>
 </html>
