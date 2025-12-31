@@ -1,0 +1,121 @@
+{
+  "solutions": {
+    "67a3c6ac": {
+      "puzzle_id": "67a3c6ac",
+      "category": "geometric",
+      "rule_description": "Horizontal Flip",
+      "solver_function": "flip_h",
+      "solved_at": "2025-12-31T05:59:59.562781",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "68b16354": {
+      "puzzle_id": "68b16354",
+      "category": "geometric",
+      "rule_description": "Vertical Flip",
+      "solver_function": "flip_v",
+      "solved_at": "2025-12-31T05:59:59.563170",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "ed36ccf7": {
+      "puzzle_id": "ed36ccf7",
+      "category": "geometric",
+      "rule_description": "Rotate 90\u00b0",
+      "solver_function": "rot90",
+      "solved_at": "2025-12-31T05:59:59.563467",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "6150a2bd": {
+      "puzzle_id": "6150a2bd",
+      "category": "geometric",
+      "rule_description": "Rotate 180\u00b0",
+      "solver_function": "rot180",
+      "solved_at": "2025-12-31T05:59:59.563725",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "3c9b0459": {
+      "puzzle_id": "3c9b0459",
+      "category": "geometric",
+      "rule_description": "Rotate 180\u00b0",
+      "solver_function": "rot180",
+      "solved_at": "2025-12-31T05:59:59.564097",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "74dd1130": {
+      "puzzle_id": "74dd1130",
+      "category": "geometric",
+      "rule_description": "Matrix Transpose",
+      "solver_function": "transpose",
+      "solved_at": "2025-12-31T05:59:59.564539",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "9dfd6313": {
+      "puzzle_id": "9dfd6313",
+      "category": "geometric",
+      "rule_description": "Matrix Transpose",
+      "solver_function": "transpose",
+      "solved_at": "2025-12-31T05:59:59.564799",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "0d3d703e": {
+      "puzzle_id": "0d3d703e",
+      "category": "color_map",
+      "rule_description": "Color map: {3: 4, 1: 5, 2: 6, 8: 9}",
+      "solver_function": "colormap_0d3d703e",
+      "solved_at": "2025-12-31T05:59:59.565142",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "b1948b0a": {
+      "puzzle_id": "b1948b0a",
+      "category": "color_map",
+      "rule_description": "Color map: {6: 2, 7: 7}",
+      "solver_function": "colormap_b1948b0a",
+      "solved_at": "2025-12-31T05:59:59.565472",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "c8f0f002": {
+      "puzzle_id": "c8f0f002",
+      "category": "color_map",
+      "rule_description": "Color map: {1: 1, 7: 5, 8: 8}",
+      "solver_function": "colormap_c8f0f002",
+      "solved_at": "2025-12-31T05:59:59.565762",
+      "test_accuracy": 1.0,
+      "notes": ""
+    },
+    "d511f180": {
+      "puzzle_id": "d511f180",
+      "category": "color_map",
+      "rule_description": "Color map: {5: 8, 8: 5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 7: 7, 9: 9}",
+      "solver_function": "colormap_d511f180",
+      "solved_at": "2025-12-31T05:59:59.566094",
+      "test_accuracy": 1.0,
+      "notes": ""
+    }
+  },
+  "categories": {
+    "geometric": [
+      "67a3c6ac",
+      "68b16354",
+      "ed36ccf7",
+      "6150a2bd",
+      "3c9b0459",
+      "74dd1130",
+      "9dfd6313"
+    ],
+    "color_map": [
+      "0d3d703e",
+      "b1948b0a",
+      "c8f0f002",
+      "d511f180"
+    ]
+  },
+  "last_updated": "2025-12-31T05:59:59.566141"
+}
