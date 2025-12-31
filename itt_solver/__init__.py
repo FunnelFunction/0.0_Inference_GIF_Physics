@@ -1,4 +1,4 @@
-"""Intent Tensor Theory - Self-Resolving Tensor Field Solver V9"""
-from .tensor_field_v9 import IntentTensorFieldV9 as IntentTensorField
-__version__ = "0.9.0"
+"""Intent Tensor Theory - Self-Resolving Tensor Field Solver V10"""
+from .tensor_field_v10 import IntentTensorFieldV10 as IntentTensorField
+__version__ = "0.10.0"
 __all__ = ["IntentTensorField"]
